@@ -22,12 +22,12 @@ export default function Details({setCurrentStep}) {
             // `signMessage` will be undefined if the wallet doesn't support it
             if (!signMessage) throw new Error('Wallet does not support message signing!');
             // Encode anything as bytes
-            const message = new TextEncoder().encode('Hello, world!');
+            const message = new TextEncoder().encode('Descientists {💧🧪🧪🧪💧}!');
             // Sign the bytes using the wallet
             const signature = await signMessage(message);
             // Verify that the bytes were signed using the private key that matches the known public key
             if (!verify(signature, message, publicKey.toBytes())) throw new Error('Invalid signature!');
-            notify({ type: 'success', message: 'Sign message successful!', txid: bs58.encode(signature) });
+            // notify({ type: 'success', message: 'Sign message successful!', txid: bs58.encode(signature) });
 
             console.log("signature: ",signature.toString())
 
@@ -43,12 +43,12 @@ export default function Details({setCurrentStep}) {
                 if(data){
                   console.log("data :",data)
                   setCurrentStep(3)
-                    notify({ type: 'success', message: 'Sign message successful!' + "data: " + data});
+                    // notify({ type: 'success', message: 'Sign message successful!' + "data: " + data});
                 }else{
-                  notify({ type: 'error', message: `Sign Message failed! ` + error,});  
+                  // notify({ type: 'error', message: `Sign Message failed! ` + error,});  
                 }
               }catch(err){
-                notify({ type: 'error', message: `Sign Message failed!`, description: err });
+                // notify({ type: 'error', message: `Sign Message failed!`, description: err });
               }
 
             if(session){
