@@ -10,11 +10,12 @@ import { supabase } from '../../utils/supabaseClient'
 export default function Details({setCurrentStep}) {
   const { userData, setUserData } = useContext(StepperContext);
   const [loading,setLoading] = useState(false)
+  const [address,setAddress] = useState("");
 
-  const {publicKey, signMessage} = useWallet();
-  if(publicKey){
-    console.log("public key: ",publicKey)
-  }
+  // const {publicKey, signMessage} = useWallet();
+  // if(publicKey){
+  //   console.log("public key: ",publicKey)
+  // }
 
     // const onClick = useCallback(async () => {
     //     try {
@@ -80,7 +81,7 @@ export default function Details({setCurrentStep}) {
         setLoading(true)
           const user = await supabase.auth.getUser();
           const updates = {
-            address:publicKey.toString(),
+            address:address,
             user_id: user.data.user.id,
             twitter_handle:user.data.user.user_metadata.preferred_username
             // signature:signature.toString()
@@ -131,7 +132,7 @@ export default function Details({setCurrentStep}) {
                 <div className='flex justify-between items-center w-[100%]'>
                   <div className="form-control w-[100%]">
                   
-                  <input type="text" placeholder="Solana Address..." className="input input-bordered w-full max-w-xs" />
+                  <input type="text" placeholder="Solana Address..." onChange={(e)=>{setAddress(e.target.value)}} className="input input-bordered w-full max-w-xs" />
                 </div>
                 <div>
                   <button onClick={()=>{onSubmit()}} className="btn btn-outline btn-accent">submit</button>
