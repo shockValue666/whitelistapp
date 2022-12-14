@@ -18,13 +18,19 @@ function Stepper({steps,currentStep}) {
                         index + 1
                     )}
                 </div>      
-                <div className={`absolute top-0 text-center mt-16 w-32 text-xs font-medium uppercase ${step.highlighted ? "text-white " : "text-gray-400"}`}>
+                <div className={`absolute top-0 text-center mt-16 w-32 text-xl font-medium uppercase ${step.highlighted ? "text-white " : "text-gray-400"}`}>
                     {step.description}
                     {/* display descirption */}
                 </div>
             </div>
-            <div className={`flex-auto border-t-2 transition duration-500 ease-in-out ${step.completed ? "border-[#9945FF] " : "border-[#9945FF]"}`} >
+            <div className={`flex-auto ${index + 1 == steps.length ? "" : "border-t-2"}  transition duration-500 ease-in-out ${step.completed ? "border-[#9945FF] " : "border-[#9945FF]"}`} >
                 {/* display line */}
+                {
+                    index + 1 == steps.length ? 
+                    (<div>it is </div>)
+                    :
+                    (<div>it isn't</div>)
+                }
             </div>
         </div>
     )  

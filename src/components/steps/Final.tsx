@@ -1,12 +1,32 @@
 import { StepperContext } from 'contexts/StepperContext';
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { supabase } from '../../utils/supabaseClient'
+import { useRouter } from 'next/router'
 
 function Final() {
-  const { userData, setUserData } = useContext(StepperContext);
+  const router = useRouter();
+  const [accepted,setAccepted] = useState("pending")
   useEffect(()=>{
-    console.log("userData: ",userData)
+    const setVisibility = async () =>{
+      const user = await supabase.auth.getUser();
+      let { data,error } = await supabase.from('info').select().eq("user_id",user.data.user.id);
+        if (error) {
+            throw error;
+        }else{
+            console.log(data[0].accepted)
+            if(data[0].accepted == "pend"){
+              setAccepted("pending")
+            }else if(data[0].accepted == "accepted"){
+              setAccepted("accepted")
+            } else{
+              setAccepted("rejected")
+            }
+         
+        }
+    }
+    setVisibility();
   },[])
+
   return (
      <div className="container md:mt-10">
       <div className="flex flex-col items-center">
@@ -31,21 +51,41 @@ function Final() {
           </svg>
         </div>
 
-        <div className="mt-3 text-xl font-semibold uppercase text-white">
-          Congratulations!
-        </div>
         <div className="text-lg font-semibold text-gray-500">
-          Your Lablist Application has been submitted.
+          Your Lablist Application has been <span className='text-[#9945FF]'>submitted</span>.
         </div>
-        {/* <a className="mt-10" href="/user/dashboard">
-          <button className="h-10 px-5 text-green-700 transition-colors duration-150 border border-gray-300 rounded-lg focus:shadow-outline hover:bg-green-500 hover:text-green-100">
-            Close
-          </button>
-        </a> */}
+        <div className="text-lg text-white mt-2">
+            Appclication Status: 
+        </div>
+        {
+          accepted == "pending" &&
+          (<div className="badge badge-warning mt-2">
+          pending
+        </div>)
+        }
+
+        {
+          accepted == "accepted" &&
+        (
+          <div className="badge badge-success mt-2">
+          success
+        </div>
+        )
+        }
+
+        {
+          accepted == "rejected" &&
+        (
+          <div className="badge badge-error mt-2">
+          rejected
+        </div>
+        )
+        }
+
         <button
           type="button"
           className="button block"
-          onClick={() => supabase.auth.signOut()}
+          onClick={() => {supabase.auth.signOut();router.push("/")}}
         >
           Sign Out
         </button>

@@ -8,14 +8,16 @@ import { StepperContext } from 'contexts/StepperContext'
 import Payment from './steps/Payment'
 import { supabase } from '../utils/supabaseClient'
 import Essay from './steps/Essay'
+import Image from 'next/image'
+import { newLogo } from 'assets'
 
 
 const steps = [
-  "Account information",
-  "Personal Details",
-  "Motivation",
-  "Essay",
-  "Complete"
+  "🤖",
+  "💰",
+  "🛠",
+  "📈",
+  "🏁"
 ]
 
 
@@ -90,7 +92,11 @@ function Step() {
 
   return (
     <div>
-         <div className='md:w-1/3 mx-auto shadow-xl rounded-2xl pb-2 bg-base-100 border border-white'>
+         <div className='md:w-1/3 mx-auto shadow-xl rounded-2xl pb-2 bg-base-100 '>
+          <div className='flex flex-col items-center'>
+            <h1 className='text-2xl'>Descientists Lablist</h1>
+            <Image src={newLogo} width={360} height={240} />
+          </div>
               <div className='container horizontal mt-5'>
                 {/* stepper */}
                 <Stepper steps={steps} currentStep={currentStep} />
@@ -103,9 +109,9 @@ function Step() {
 
               </div>
               {/* navigation */}
-              {currentStep !== steps.length && 
+              {/* {currentStep !== steps.length && 
                 <StepperControl handleClick={handleClick} currentStep={currentStep} steps={steps}/>
-              }
+              } */}
             </div>
     </div>
   )
