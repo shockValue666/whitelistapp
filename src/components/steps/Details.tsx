@@ -16,52 +16,52 @@ export default function Details({setCurrentStep}) {
     console.log("public key: ",publicKey)
   }
 
-    const onClick = useCallback(async () => {
-        try {
-            // `publicKey` will be null if the wallet isn't connected
-            if (!publicKey) throw new Error('Wallet not connected!');
-            // `signMessage` will be undefined if the wallet doesn't support it
-            if (!signMessage) throw new Error('Wallet does not support message signing!');
-            // Encode anything as bytes
-            const message = new TextEncoder().encode('Descientists {}!');
-            // Sign the bytes using the wallet
-            const signature = await signMessage(message);
-            // Verify that the bytes were signed using the private key that matches the known public key
-            if (!verify(signature, message, publicKey.toBytes())) throw new Error('Invalid signature!');
-            // notify({ type: 'success', message: 'Sign message successful!', txid: bs58.encode(signature) });
+    // const onClick = useCallback(async () => {
+    //     try {
+    //         // `publicKey` will be null if the wallet isn't connected
+    //         if (!publicKey) throw new Error('Wallet not connected!');
+    //         // `signMessage` will be undefined if the wallet doesn't support it
+    //         if (!signMessage) throw new Error('Wallet does not support message signing!');
+    //         // Encode anything as bytes
+    //         const message = new TextEncoder().encode('Descientists {}!');
+    //         // Sign the bytes using the wallet
+    //         const signature = await signMessage(message);
+    //         // Verify that the bytes were signed using the private key that matches the known public key
+    //         if (!verify(signature, message, publicKey.toBytes())) throw new Error('Invalid signature!');
+    //         // notify({ type: 'success', message: 'Sign message successful!', txid: bs58.encode(signature) });
 
-            console.log("signature: ",signature.toString())
+    //         console.log("signature: ",signature.toString())
 
-            try{
-                const user = await supabase.auth.getUser();
-                const updates = {
-                  address:publicKey.toString(),
-                  user_id: user.data.user.id,
-                  signature:signature.toString()
-                  // created_at: new Date(),
-                };
-                let { data,error } = await supabase.from('info').insert(updates).select();
-                if(data){
-                  console.log("data :",data)
-                  setCurrentStep(3)
-                    // notify({ type: 'success', message: 'Sign message successful!' + "data: " + data});
-                }else{
-                  // notify({ type: 'error', message: `Sign Message failed! ` + error,});  
-                  console.log("error: ",error)
-                }
-              }catch(err){
-                // notify({ type: 'error', message: `Sign Message failed!`, description: err });
-                console.log("error: ",err)
-              }
+    //         try{
+    //             const user = await supabase.auth.getUser();
+    //             const updates = {
+    //               address:publicKey.toString(),
+    //               user_id: user.data.user.id,
+    //               signature:signature.toString()
+    //               // created_at: new Date(),
+    //             };
+    //             let { data,error } = await supabase.from('info').insert(updates).select();
+    //             if(data){
+    //               console.log("data :",data)
+    //               setCurrentStep(3)
+    //                 // notify({ type: 'success', message: 'Sign message successful!' + "data: " + data});
+    //             }else{
+    //               // notify({ type: 'error', message: `Sign Message failed! ` + error,});  
+    //               console.log("error: ",error)
+    //             }
+    //           }catch(err){
+    //             // notify({ type: 'error', message: `Sign Message failed!`, description: err });
+    //             console.log("error: ",err)
+    //           }
 
-            if(session){
-              console.log("session exists")
-            }
-        } catch (error: any) {
-            notify({ type: 'error', message: `Sign Message failed!`, description: error?.message });
-            console.log('error', `Sign Message failed! ${error?.message}`);
-        }
-    }, [publicKey, notify, signMessage]);
+    //         if(session){
+    //           console.log("session exists")
+    //         }
+    //     } catch (error: any) {
+    //         notify({ type: 'error', message: `Sign Message failed!`, description: error?.message });
+    //         console.log('error', `Sign Message failed! ${error?.message}`);
+    //     }
+    // }, [publicKey, notify, signMessage]);
 
 
   const [session,setSession] = useState(null)
@@ -82,6 +82,7 @@ export default function Details({setCurrentStep}) {
           const updates = {
             address:publicKey.toString(),
             user_id: user.data.user.id,
+            twitter_handle:user.data.user.user_metadata.preferred_username
             // signature:signature.toString()
             // created_at: new Date(),
           };
@@ -101,8 +102,12 @@ export default function Details({setCurrentStep}) {
     }
 
     useEffect(()=>{
+      const getSth = async() =>{
+        const user = await supabase.auth.getUser();
+        console.log("user: ",user.data.user.user_metadata.preferred_username)
+      }
       if(session){
-
+        getSth();
       }
     },[session])
 
@@ -120,15 +125,20 @@ export default function Details({setCurrentStep}) {
                     Sign Message 
                 </span>
             </button> */}
-            <div className='flex justify-between items-center w-[100%]'>
-                <div className="form-control w-[100%]">
-                
-                <input type="text" placeholder="Solana Address..." className="input input-bordered w-full max-w-xs" />
+            {
+              !loading &&
+              (
+                <div className='flex justify-between items-center w-[100%]'>
+                  <div className="form-control w-[100%]">
+                  
+                  <input type="text" placeholder="Solana Address..." className="input input-bordered w-full max-w-xs" />
+                </div>
+                <div>
+                  <button onClick={()=>{onSubmit()}} className="btn btn-outline btn-accent">submit</button>
+                </div>
               </div>
-              <div>
-                <button onClick={()=>{onSubmit()}} className="btn btn-outline btn-accent">submit</button>
-              </div>
-            </div>
+              )
+            }
             {
               loading && (
                 <div className="flex justify-center items-center">
