@@ -27,7 +27,7 @@ function Step() {
     const [userData,setUserData] = useState("");
   const [finalData,setFinalData] = useState([])
 
-  const [currentStep,setCurrentStep] = useState(1)
+  const [currentStep,setCurrentStep] = useState(null)
 
   const displayStep = (step)=>{
     switch(step){
@@ -60,6 +60,9 @@ function Step() {
     useEffect(()=>{
       const getUserInfo = async() =>{
         const user = await supabase.auth.getUser();
+        if(user){
+          console.log("uusserr: ",user)
+        }
         if(user.data.user){
           console.log("user: ",user)
           let { data,error } = await supabase.from('info').select().eq("user_id",user.data.user.id);
@@ -78,6 +81,8 @@ function Step() {
           else{
             console.log("error: ",error)
           }
+        }else{
+          setCurrentStep(1)
         }
       }
       getUserInfo()
