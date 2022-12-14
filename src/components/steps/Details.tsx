@@ -74,6 +74,30 @@ export default function Details({setCurrentStep}) {
       })
     }, [])
 
+    const onSubmit = async () =>{
+      try{
+          const user = await supabase.auth.getUser();
+          const updates = {
+            address:publicKey.toString(),
+            user_id: user.data.user.id,
+            // signature:signature.toString()
+            // created_at: new Date(),
+          };
+          let { data,error } = await supabase.from('info').insert(updates).select();
+          if(data){
+            console.log("data :",data)
+            setCurrentStep(3)
+              // notify({ type: 'success', message: 'Sign message successful!' + "data: " + data});
+          }else{
+            // notify({ type: 'error', message: `Sign Message failed! ` + error,});  
+            console.log("error: ",error)
+          }
+        }catch(err){
+          // notify({ type: 'error', message: `Sign Message failed!`, description: err });
+          console.log("error: ",err)
+        }
+    }
+
     useEffect(()=>{
       if(session){
 
@@ -81,10 +105,9 @@ export default function Details({setCurrentStep}) {
     },[session])
 
   return (
-    <div className="flex flex-col items-center gap-y-8 ">
+    <div className="flex flex-col items-center justify-center gap-y-8 ">
       <WalletMultiButton className="btn w-[100%]" />
-      <div>
-            <button
+            {/* <button
                 className="group w-60 m-2 btn animate-pulse disabled:animate-none bg-gradient-to-r from-[#9945FF] to-[#14F195] hover:from-pink-500 hover:to-yellow-500 ... "
                 onClick={onClick} disabled={!publicKey}
             >
@@ -94,8 +117,16 @@ export default function Details({setCurrentStep}) {
                 <span className="block group-disabled:hidden" > 
                     Sign Message 
                 </span>
-            </button>
-        </div>
+            </button> */}
+            <div className='flex justify-between items-center w-[100%]'>
+                <div className="form-control w-[100%]">
+                
+                <input type="text" placeholder="Solana Address..." className="input input-bordered w-full max-w-xs" />
+              </div>
+              <div>
+                <button onClick={()=>{onSubmit()}} className="btn btn-outline btn-accent">submit</button>
+              </div>
+            </div>
     </div>
   );
 }
