@@ -22,8 +22,11 @@ function Essay({setCurrentStep}) {
 
   return (
     <div className='flex flex-col items-center gap-y-8'>
+      <div className="text-white text-[20px]">
+          Something special about you:
+      </div>
       <div className="w-[100%]">
-          <textarea className="textarea textarea-secondary w-[100%]" placeholder="Bio" onChange={(e)=>{setEssay(e.target.value)}}></textarea>
+          <textarea className="textarea textarea-secondary w-[100%]" placeholder="write here..." onChange={(e)=>{setEssay(e.target.value)}}></textarea>
       </div>
     
       <div>

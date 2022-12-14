@@ -91,7 +91,6 @@ function Step() {
   }
 
   return (
-    <div>
          <div className='md:w-1/3 mx-auto shadow-xl rounded-2xl pb-2 bg-base-100 '>
           <div className='flex flex-col items-center'>
             <h1 className='text-2xl'>Descientists Lablist</h1>
@@ -113,7 +112,6 @@ function Step() {
                 <StepperControl handleClick={handleClick} currentStep={currentStep} steps={steps}/>
               } */}
             </div>
-    </div>
   )
 }
 

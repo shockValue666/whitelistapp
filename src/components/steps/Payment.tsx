@@ -53,12 +53,12 @@ function Payment({setCurrentStep}) {
       </div>
       <div className='container mx-auto'>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <button onClick = {(e) => {select(e);}} className={`btn outline-slate-300 outline ${clicked["NFTHolder"] == true ? "bg-black text-white	" : "bg-white text-black"}`} name="NFTHolder">NFT holder</button>
-        <button onClick = {(e) => {select(e);}} className={`btn outline-slate-300 outline ${clicked["mod"] == true ? "bg-black text-white	" : "bg-white text-black"}`} name="mod">Mod</button>
-        <button onClick = {(e) => {select(e);}} className={`btn outline-slate-300 outline ${clicked["collabManager"] == true ? "bg-black text-white	" : "bg-white text-black"}`} name="collabManager">Collab Manager</button>
-        <button onClick = {(e) => {select(e);}} className={`btn outline-slate-300 outline ${clicked["twitterInfluencer"] == true ? "bg-black text-white	" : "bg-white text-black"}`} name="twitterInfluencer">Twitter Influencer</button>
-        <button onClick = {(e) => {select(e);}} className={`btn outline-slate-300 outline ${clicked["artist"] == true ? "bg-black text-white	" : "bg-white text-black"}`} name="artist">Artist</button>
-        <button onClick = {(e) => {select(e);}} className={`btn outline-slate-300 outline ${clicked["developer"] == true ? "bg-black text-white	" : "bg-white text-black"}`} name="developer">developer</button>
+        <button onClick = {(e) => {select(e);}} className={`sm:hover:bg-white md:btn outline-slate-300 outline ${clicked["NFTHolder"] == true ? "bg-black text-white	" : "bg-white text-black"}`} name="NFTHolder">NFT holder</button>
+        <button onClick = {(e) => {select(e);}} className={`sm:hover:bg-white md:btn outline-slate-300 outline ${clicked["mod"] == true ? "bg-black text-white	" : "bg-white text-black"}`} name="mod">Mod</button>
+        <button onClick = {(e) => {select(e);}} className={`sm:hover:bg-white md:btn outline-slate-300 outline ${clicked["collabManager"] == true ? "bg-black text-white	" : "bg-white text-black"}`} name="collabManager">Collab Manager</button>
+        <button onClick = {(e) => {select(e);}} className={`sm:hover:bg-white md:btn outline-slate-300 outline ${clicked["twitterInfluencer"] == true ? "bg-black text-white	" : "bg-white text-black"}`} name="twitterInfluencer">Twitter Influencer</button>
+        <button onClick = {(e) => {select(e);}} className={`sm:hover:bg-white md:btn outline-slate-300 outline ${clicked["artist"] == true ? "bg-black text-white	" : "bg-white text-black"}`} name="artist">Artist</button>
+        <button onClick = {(e) => {select(e);}} className={`sm:hover:bg-white md:btn outline-slate-300 outline ${clicked["developer"] == true ? "bg-black text-white	" : "bg-white text-black"}`} name="developer">developer</button>
       </div>
     </div>
     <div>
