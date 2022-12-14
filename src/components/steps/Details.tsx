@@ -9,6 +9,7 @@ import { supabase } from '../../utils/supabaseClient'
 
 export default function Details({setCurrentStep}) {
   const { userData, setUserData } = useContext(StepperContext);
+  const [loading,setLoading] = useState(false)
 
   const {publicKey, signMessage} = useWallet();
   if(publicKey){
@@ -76,6 +77,7 @@ export default function Details({setCurrentStep}) {
 
     const onSubmit = async () =>{
       try{
+        setLoading(true)
           const user = await supabase.auth.getUser();
           const updates = {
             address:publicKey.toString(),
@@ -106,7 +108,7 @@ export default function Details({setCurrentStep}) {
 
   return (
     <div className="flex flex-col items-center justify-center gap-y-8 ">
-      <WalletMultiButton className="btn w-[100%]" />
+      {/* <WalletMultiButton className="btn w-[100%]" /> */}
             {/* <button
                 className="group w-60 m-2 btn animate-pulse disabled:animate-none bg-gradient-to-r from-[#9945FF] to-[#14F195] hover:from-pink-500 hover:to-yellow-500 ... "
                 onClick={onClick} disabled={!publicKey}
@@ -127,6 +129,15 @@ export default function Details({setCurrentStep}) {
                 <button onClick={()=>{onSubmit()}} className="btn btn-outline btn-accent">submit</button>
               </div>
             </div>
+            {
+              loading && (
+                <div className="flex justify-center items-center">
+                  <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full" role="status">
+                    <span className="visually-hidden">...</span>
+                  </div>
+                </div>
+              )
+            }
     </div>
   );
 }

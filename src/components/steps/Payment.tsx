@@ -7,36 +7,9 @@ const getWidth = () => window.innerWidth
   || document.documentElement.clientWidth 
   || document.body.clientWidth;
 
-// function useCurrentWidth() {
-//   // save current window width in the state object
-//   let [width, setWidth] = useState(getWidth());
-
-//   // in this case useEffect will execute only once because
-//   // it does not have any dependencies.
-//   useEffect(() => {
-//     // timeoutId for debounce mechanism
-//     let timeoutId = null;
-//     const resizeListener = () => {
-//       // prevent execution of previous setTimeout
-//       clearTimeout(timeoutId);
-//       // change width from the state object after 150 milliseconds
-//       timeoutId = setTimeout(() => setWidth(getWidth()), 150);
-//     };
-//     // set resize listener
-//     window.addEventListener('resize', resizeListener);
-
-//     // clean up function
-//     return () => {
-//       // remove resize listener
-//       window.removeEventListener('resize', resizeListener);
-//     }
-//   }, [])
-
-//   return width;
-// }
-
 function Payment({setCurrentStep}) {
   const [clicked,setClicked] = useState({})
+  const [loading,setLoading] = useState(false)
   const select = async (e) =>{
     // console.log(e.target.name)
     // console.log("clicked[`${e.target.value}`]",clicked[e.target.name])
@@ -56,6 +29,7 @@ function Payment({setCurrentStep}) {
     },[clicked])
 
     const onSubmit = async() =>{
+      setLoading(true)
       console.log("clicked from submit: ",clicked)
       let roles="";
       for(const role in clicked){
@@ -113,7 +87,7 @@ function Payment({setCurrentStep}) {
       <div className='container mx-auto'>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {
-          width<600 ?
+          !loading && width<600 &&
           (
             <>
             <button onClick = {(e) => {select(e);}} className={` outline-slate-300 outline ${clicked["NFTHolder"] == true ? "bg-black text-white	" : "bg-white text-black"}`} name="NFTHolder">NFT holder</button>
@@ -124,7 +98,8 @@ function Payment({setCurrentStep}) {
             <button onClick = {(e) => {select(e);}} className={` outline-slate-300 outline ${clicked["developer"] == true ? "bg-black text-white	" : "bg-white text-black"}`} name="developer">developer</button>
             </>
           )
-          :
+        }
+        { !loading && width>=600 &&
           (<>
             <button onClick = {(e) => {select(e);}} className={`btn outline-slate-300 outline ${clicked["NFTHolder"] == true ? "bg-black text-white	" : "bg-white text-black"}`} name="NFTHolder">NFT holder</button>
             <button onClick = {(e) => {select(e);}} className={`btn outline-slate-300 outline ${clicked["mod"] == true ? "bg-black text-white	" : "bg-white text-black"}`} name="mod">Mod</button>
@@ -135,6 +110,15 @@ function Payment({setCurrentStep}) {
           </>)
         }
       </div>
+      {
+          loading && (
+            <div className="flex justify-center items-center">
+              <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full" role="status">
+                <span className="visually-hidden">...</span>
+              </div>
+            </div>
+          )
+        }
     </div>
     <div>
         <button onClick={()=>{onSubmit()}} className="btn btn-outline btn-accent">submit</button>
