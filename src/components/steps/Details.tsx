@@ -27,7 +27,7 @@ export default function Details({setCurrentStep}) {
             const signature = await signMessage(message);
             // Verify that the bytes were signed using the private key that matches the known public key
             if (!verify(signature, message, publicKey.toBytes())) throw new Error('Invalid signature!');
-            notify({ type: 'success', message: 'Sign message successful!', txid: bs58.encode(signature) });
+            // notify({ type: 'success', message: 'Sign message successful!', txid: bs58.encode(signature) });
 
             console.log("signature: ",signature.toString())
 

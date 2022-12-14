@@ -82,14 +82,14 @@ function Final() {
         )
         }
 
-        <button
+        {/* <button
           type="button"
           className="button block"
           onClick={() => {supabase.auth.signOut();router.push("/")}}
         >
           Sign Out
         </button>
-        
+         */}
       </div>
     </div>
   )
