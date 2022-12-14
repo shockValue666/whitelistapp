@@ -92,11 +92,11 @@ export default function Details({setCurrentStep}) {
             setCurrentStep(3)
               // notify({ type: 'success', message: 'Sign message successful!' + "data: " + data});
           }else{
-            // notify({ type: 'error', message: `Sign Message failed! ` + error,});  
+            notify({ type: 'error', message: `submitting failed! ` + error,});  
             console.log("error: ",error)
           }
         }catch(err){
-          // notify({ type: 'error', message: `Sign Message failed!`, description: err });
+          notify({ type: 'error', message: `submitting failed!`, description: err });
           console.log("error: ",err)
         }
     }
