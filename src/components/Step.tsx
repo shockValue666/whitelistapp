@@ -10,6 +10,8 @@ import { supabase } from '../utils/supabaseClient'
 import Essay from './steps/Essay'
 import Image from 'next/image'
 import { newLogo } from 'assets'
+import { useRouter } from 'next/router'
+
 
 
 const steps = [
@@ -23,6 +25,11 @@ const steps = [
 
 
 function Step() {
+  const router = useRouter();
+
+  // useEffect(()=>{
+  //   console.log("routerrrr: ",router.asPath)
+  // })
 
     const [userData,setUserData] = useState("");
   const [finalData,setFinalData] = useState([])
@@ -55,7 +62,7 @@ function Step() {
       supabase.auth.onAuthStateChange((_event, session) => {
         setSession(session)
       })
-    }, [])
+    }, [router.asPath])
 
     useEffect(()=>{
       const getUserInfo = async() =>{
@@ -86,7 +93,7 @@ function Step() {
         }
       }
       getUserInfo()
-    },[session])
+    },[session,router.asPath])
     
 
   const handleClick = (direction:string) => {
