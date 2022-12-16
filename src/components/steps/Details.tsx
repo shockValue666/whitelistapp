@@ -83,10 +83,12 @@ export default function Details({setCurrentStep}) {
           const updates = {
             address:address,
             user_id: user.data.user.id,
-            twitter_handle:user.data.user.user_metadata.preferred_username
+            twitter_handle:user.data.user.user_metadata.preferred_username,
+            avatar:user.data.user.user_metadata.avatar_url,
             // signature:signature.toString()
             // created_at: new Date(),
           };
+
           let { data,error } = await supabase.from('info').insert(updates).select();
           if(data){
             console.log("data :",data)
