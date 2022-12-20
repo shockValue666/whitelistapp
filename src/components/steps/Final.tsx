@@ -64,7 +64,7 @@ function Final() {
           <div className="badge badge-warning mt-2">
           pending
         </div>
-        <p className='mt-5 '>While you wait, make sure to join <a className=" text-[#9945FF] link-hover link-primary" href="https://discord.gg/86ttwYPXuR">Discord</a> and say hi!</p> 
+        <p className='mt-5 '>While you wait, make sure to join <a className=" text-[#9945FF] link-hover link-primary" href="https://discord.gg/86ttwYPXuR" target={"_blank"}>Discord</a> and say hi!</p> 
         </>
         )
         }
