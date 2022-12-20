@@ -59,17 +59,24 @@ function Final() {
         </div>
         {
           accepted == "pending" &&
-          (<div className="badge badge-warning mt-2">
+          (
+            <>
+          <div className="badge badge-warning mt-2">
           pending
-        </div>)
+        </div>
+        <p className='mt-5 '>While you wait, make sure to join <a className=" text-[#9945FF] link-hover link-primary" href="https://discord.gg/86ttwYPXuR">Discord</a> and say hi!</p> 
+        </>
+        )
         }
 
         {
           accepted == "accepted" &&
         (
+          <>
           <div className="badge badge-success mt-2">
           success
         </div>
+        </>
         )
         }
 
@@ -81,6 +88,8 @@ function Final() {
         </div>
         )
         }
+
+
 
         {/* <button
           type="button"
