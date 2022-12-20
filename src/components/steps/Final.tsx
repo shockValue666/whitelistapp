@@ -55,7 +55,7 @@ function Final() {
           Your Lablist Application has been <span className='text-[#9945FF]'>submitted</span>.
         </div>
         <div className="text-lg text-white mt-2">
-            Appclication Status: 
+            Application Status: 
         </div>
         {
           accepted == "pending" &&
